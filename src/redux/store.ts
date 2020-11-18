@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import root_saga from './root.saga';
+import root_reducer from './root.reducer';
 
-import rootSaga from './rootSaga';
-import rootReducer from './rootReducer';
-
-const initialState = {};
+const initial_state = {};
 const sagaMiddleware = createSagaMiddleware();
 
 /* eslint-disable */
@@ -16,11 +15,11 @@ const composeEnhancers =
 /* eslint-enable */
 
 const store = createStore(
-  rootReducer,
-  initialState,
+  root_reducer,
+  initial_state,
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(root_saga);
 
 export { store };

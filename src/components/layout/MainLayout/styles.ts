@@ -15,5 +15,6 @@ export const StyledMain = styled.main`
     flex: 1;
     background-color: pink;
     background-color: ${eggshell};
+    padding: 3rem;
   }
 `;

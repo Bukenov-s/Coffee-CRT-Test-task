@@ -1,13 +1,15 @@
-// import { getType } from '@reduxjs/toolkit';
-// import { takeLatest, put } from 'redux-saga/effects';
-// import { addThing } from './things.actions';
+import { getType } from '@reduxjs/toolkit';
+import { takeLatest, put } from 'redux-saga/effects';
+import { calculateOrderPrice } from './coffee.actions';
 
-// function* addThingSaga({ payload: { thing } }: ReturnType<typeof addThing>) {
-//   console.log('saga is triggered');
-//   console.log(`here is the thing ${thing}`);
-//   yield put({ type: 'SOME_REACTION_TO_ACTION' });
-// }
+function* calculateOrderPriceSaga({
+  payload: { order },
+}: ReturnType<typeof calculateOrderPrice>) {
+  console.log('saga is triggered');
+  console.log(`here is the thing ${order}`);
+  yield put({ type: 'SOME_REACTION_TO_ACTION' });
+}
 
-// export default function* thingsFlow() {
-//   yield takeLatest(getType(addThing), addThingSaga);
-// }
+export default function* coffeeFlow() {
+  yield takeLatest(getType(calculateOrderPrice), calculateOrderPriceSaga);
+}
