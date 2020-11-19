@@ -1,9 +1,9 @@
 export interface CoffeeOrder {
-  sugarIncluded: boolean;
-  cinnamonIncluded: boolean;
-  takeoutIncluded: boolean;
+  sugar_included: boolean;
+  cinnamon_included: boolean;
+  takeout_included: boolean;
   syrup: string;
-  beanType: string;
+  bean_type: string;
 }
 
 export interface CoffeeState {

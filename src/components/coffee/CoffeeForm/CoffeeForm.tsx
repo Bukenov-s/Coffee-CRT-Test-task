@@ -25,11 +25,11 @@ export const CoffeeForm: FC<Props> = ({
   calculateOrderPrice,
   is_coffee_pending,
 }) => {
-  const [sugarIncluded, setSugarIncluded] = useState(false);
-  const [takeoutIncluded, setTakeoutIncluded] = useState(false);
-  const [cinnamonIncluded, setCinnamonIncluded] = useState(false);
+  const [sugar_included, setSugarIncluded] = useState(false);
+  const [takeout_included, setTakeoutIncluded] = useState(false);
+  const [cinnamon_included, setCinnamonIncluded] = useState(false);
   const [syrup, setSyrup] = useState('none');
-  const [beanType, setBeanType] = useState('Arabica');
+  const [bean_type, setBeanType] = useState('Arabica');
 
   const onCimmanonIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => setCinnamonIncluded(e.target.checked),
@@ -69,24 +69,30 @@ export const CoffeeForm: FC<Props> = ({
       e.preventDefault();
 
       console.table([
-        ['sugar', sugarIncluded],
-        ['cinnamon', cinnamonIncluded],
-        ['takeout', takeoutIncluded],
+        ['sugar', sugar_included],
+        ['cinnamon', cinnamon_included],
+        ['takeout', takeout_included],
         ['syrup', syrup],
-        ['beanType', beanType],
+        ['beanType', bean_type],
       ]);
 
       calculateOrderPrice({
-        sugarIncluded,
-        cinnamonIncluded,
-        takeoutIncluded,
+        sugar_included,
+        cinnamon_included,
+        takeout_included,
         syrup,
-        beanType,
+        bean_type,
       });
 
       resetCoffeeForm();
     },
-    [sugarIncluded, cinnamonIncluded, takeoutIncluded, syrup, resetCoffeeForm],
+    [
+      sugar_included,
+      cinnamon_included,
+      takeout_included,
+      syrup,
+      resetCoffeeForm,
+    ],
   );
 
   if (is_coffee_pending) {
@@ -102,7 +108,7 @@ export const CoffeeForm: FC<Props> = ({
       <h1>Coffee terminal</h1>
       <div className="form-field">
         <label htmlFor="bean_type">Bean type</label>
-        <select id="bean_type" value={beanType} onChange={onBeanTypeChange}>
+        <select id="bean_type" value={bean_type} onChange={onBeanTypeChange}>
           {BEAN_TYPES.map((bean_type) => (
             <option key={bean_type.id} value={bean_type.id}>
               {bean_type.name} (${bean_type.price})
@@ -116,7 +122,7 @@ export const CoffeeForm: FC<Props> = ({
             type="checkbox"
             name="sugar"
             id="sugar"
-            checked={sugarIncluded}
+            checked={sugar_included}
             onChange={onSugarIncludedChange}
           />
           <label htmlFor="sugar">Add sugar (${SUGAR_PRICE})</label>
@@ -126,7 +132,7 @@ export const CoffeeForm: FC<Props> = ({
             type="checkbox"
             name="cinnamon"
             id="cinnamon"
-            checked={cinnamonIncluded}
+            checked={cinnamon_included}
             onChange={onCimmanonIncludedChange}
           />
           <label htmlFor="cinnamon">Add cinnamon (${CINNAMON_PRICE})</label>
@@ -148,7 +154,7 @@ export const CoffeeForm: FC<Props> = ({
           type="checkbox"
           name="takeout"
           id="takeout"
-          checked={takeoutIncluded}
+          checked={takeout_included}
           onChange={onTakeoutIncludedChange}
         />
         <label htmlFor="takeout">takeout (${TAKEOUT_PRICE})</label>

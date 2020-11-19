@@ -23,15 +23,15 @@ function* calculateOrderPriceSaga({
   yield delay(1000);
 
   const price = Object.keys(order).reduce((acc, currentKey) => {
-    if (currentKey === 'sugarIncluded' && order['sugarIncluded']) {
+    if (currentKey === 'sugar_included' && order['sugar_included']) {
       acc = acc + SUGAR_PRICE;
     }
 
-    if (currentKey === 'takeoutIncluded' && order['takeoutIncluded']) {
+    if (currentKey === 'takeout_included' && order['takeout_included']) {
       acc = acc + TAKEOUT_PRICE;
     }
 
-    if (currentKey === 'cinnamonIncluded' && order['cinnamonIncluded']) {
+    if (currentKey === 'cinnamon_included' && order['cinnamon_included']) {
       acc = acc + CINNAMON_PRICE;
     }
 
@@ -43,8 +43,8 @@ function* calculateOrderPriceSaga({
       }
     }
 
-    if (currentKey === 'beanType') {
-      const bean_type = BEAN_TYPES.find(({ id }) => id === order.beanType);
+    if (currentKey === 'bean_type') {
+      const bean_type = BEAN_TYPES.find(({ id }) => id === order.bean_type);
 
       if (bean_type) {
         acc = acc + bean_type.price;
