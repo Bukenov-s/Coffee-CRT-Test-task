@@ -4,6 +4,7 @@ import CoffeeForm from '~/components/coffee/CoffeeForm';
 import Modal from '~/components/ui/Modal';
 import * as coffeeActions from '~/redux/coffee/coffee.actions';
 import {
+  selectCoffeeIsPending,
   selectCoffeeOrderComplete,
   selectCoffeePrice,
 } from '~/redux/coffee/coffee.selectors';
@@ -12,8 +13,7 @@ export const CoffeePage: FC = () => {
   const dispatch = useDispatch();
   const order_complete = useSelector(selectCoffeeOrderComplete);
   const price = useSelector(selectCoffeePrice);
-
-  console.log('ORDER COMPLETE', order_complete);
+  const is_coffee_pending = useSelector(selectCoffeeIsPending);
 
   const calculateOrderPrice = useCallback(
     (order) => {
@@ -28,7 +28,10 @@ export const CoffeePage: FC = () => {
 
   return (
     <section className="flex-center">
-      <CoffeeForm calculateOrderPrice={calculateOrderPrice} />
+      <CoffeeForm
+        calculateOrderPrice={calculateOrderPrice}
+        is_coffee_pending={is_coffee_pending}
+      />
       {order_complete && (
         <Modal onClose={orderDataCleared}>Your order price is ${price}</Modal>
       )}

@@ -17,6 +17,8 @@ export const StyledForm = styled.form`
   flex-direction: column;
   background-color: ${shadow_blue};
   padding: 1rem 2rem;
+  width: 350px;
+  height: 250px;
   color: white;
   animation-duration: 1s;
   animation-iteration-count: 1;

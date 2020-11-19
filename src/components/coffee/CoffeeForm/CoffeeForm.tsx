@@ -13,14 +13,18 @@ import {
   SYRUP_TYPES,
   TAKEOUT_PRICE,
 } from '~/redux/coffee/coffee.constants';
-import { CoffeeOrder } from '~/redux/coffee/coffee.types';
+import { CoffeeOrder, CoffeeState } from '~/redux/coffee/coffee.types';
 import { StyledForm } from './styles';
 
 interface Props {
   calculateOrderPrice: (order: CoffeeOrder) => void;
+  is_coffee_pending: CoffeeState['is_pending'];
 }
 
-export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
+export const CoffeeForm: FC<Props> = ({
+  calculateOrderPrice,
+  is_coffee_pending,
+}) => {
   const [sugarIncluded, setSugarIncluded] = useState(false);
   const [takeoutIncluded, setTakeoutIncluded] = useState(false);
   const [cinnamonIncluded, setCinnamonIncluded] = useState(false);
@@ -52,6 +56,14 @@ export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
     [setBeanType],
   );
 
+  const resetCoffeeForm = useCallback(() => {
+    setSugarIncluded(false);
+    setTakeoutIncluded(false);
+    setCinnamonIncluded(false);
+    setSyrup('none');
+    setBeanType('Arabica');
+  }, []);
+
   const onCoffeFormSubmit: FormEventHandler = useCallback(
     (e) => {
       e.preventDefault();
@@ -71,9 +83,19 @@ export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
         syrup,
         beanType,
       });
+
+      resetCoffeeForm();
     },
-    [sugarIncluded, cinnamonIncluded, takeoutIncluded, syrup],
+    [sugarIncluded, cinnamonIncluded, takeoutIncluded, syrup, resetCoffeeForm],
   );
+
+  if (is_coffee_pending) {
+    return (
+      <StyledForm>
+        <h1>...loading</h1>
+      </StyledForm>
+    );
+  }
 
   return (
     <StyledForm onSubmit={onCoffeFormSubmit}>
