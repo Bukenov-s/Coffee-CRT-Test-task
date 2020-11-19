@@ -1,5 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shadow_blue } from '~/styles/variables';
+
+const appearAndScale = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.9, 0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+`;
 
 export const StyledForm = styled.form`
   display: flex;
@@ -7,6 +18,9 @@ export const StyledForm = styled.form`
   background-color: ${shadow_blue};
   padding: 1rem 2rem;
   color: white;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-name: ${appearAndScale};
 
   & h1 {
     font-weight: bold;
@@ -18,6 +32,11 @@ export const StyledForm = styled.form`
   & .form-field {
     display: flex;
     flex-direction: column;
+    padding: 0.25rem;
+  }
+
+  & .form-field-checkbox {
+    display: flex;
     padding: 0.25rem;
   }
 `;

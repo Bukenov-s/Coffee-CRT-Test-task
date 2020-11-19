@@ -1,8 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
+import { CoffeeOrder } from './coffee.types';
 
 export const calculateOrderPrice = createAction(
   '[coffee ->] Calculate order price',
-  (order) => ({
+  (order: CoffeeOrder) => ({
     payload: {
       order,
     },
@@ -11,7 +12,7 @@ export const calculateOrderPrice = createAction(
 
 export const orderPriceCalculated = createAction(
   '[coffee <-] Order price calculated',
-  (price) => ({
+  (price: number) => ({
     payload: {
       price,
     },

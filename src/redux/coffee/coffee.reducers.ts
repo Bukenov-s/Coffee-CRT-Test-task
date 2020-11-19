@@ -5,8 +5,9 @@ import {
   orderDataCleared,
   orderPriceCalculated,
 } from './coffee.actions';
+import { CoffeeState } from './coffee.types';
 
-const initial_state = {
+const initial_state: CoffeeState = {
   is_pending: false,
   price: 0,
   is_order_complete: false,
@@ -27,7 +28,7 @@ export default createReducer(initial_state, (builder) => {
       state.is_order_complete = false;
     })
     .addCase(orderComplete, (state) => {
-      state.is_order_complete = false;
+      state.is_order_complete = true;
     })
     .addDefaultCase((state) => state);
 });

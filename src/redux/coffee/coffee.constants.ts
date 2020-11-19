@@ -56,3 +56,7 @@ export const SYRUP_TYPES = [
     price: 3,
   },
 ];
+
+export const SUGAR_PRICE = 1;
+export const CINNAMON_PRICE = 1;
+export const TAKEOUT_PRICE = 1;

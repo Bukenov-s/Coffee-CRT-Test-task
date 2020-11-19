@@ -1,15 +1,95 @@
-import React, { FC } from 'react';
+import React, {
+  ChangeEventHandler,
+  FC,
+  FormEventHandler,
+  useCallback,
+  useState,
+} from 'react';
 import Button from '~/components/ui/Button';
-import { BEAN_TYPES, SYRUP_TYPES } from '~/redux/coffee/coffee.constants';
+import {
+  BEAN_TYPES,
+  CINNAMON_PRICE,
+  SUGAR_PRICE,
+  SYRUP_TYPES,
+  TAKEOUT_PRICE,
+} from '~/redux/coffee/coffee.constants';
 import { StyledForm } from './styles';
 
-export const CoffeeForm: FC = () => {
+interface Props {
+  calculateOrderPrice: (order: any) => void;
+}
+
+export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
+  const [sugarIncluded, setSugarIncluded] = useState(false);
+  const [takeoutIncluded, setTakeoutIncluded] = useState(false);
+  const [cinnamonIncluded, setCinnamonIncluded] = useState(false);
+  const [syrup, setSyrup] = useState('none');
+  const [beanType, setBeanType] = useState('Arabica');
+
+  const onCimmanonIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      setCinnamonIncluded(e.target.checked);
+    },
+    [setCinnamonIncluded],
+  );
+
+  const onTakeoutIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      setTakeoutIncluded(e.target.checked);
+    },
+    [setTakeoutIncluded],
+  );
+
+  const onSugarIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      setSugarIncluded(e.target.checked);
+    },
+    [setSugarIncluded],
+  );
+
+  const onSyrupChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
+    (e) => {
+      setSyrup(e.target.value);
+    },
+    [setSyrup],
+  );
+
+  const onBeanTypeChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
+    (e) => {
+      setBeanType(e.target.value);
+    },
+    [setBeanType],
+  );
+
+  const onCoffeFormSubmit: FormEventHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      console.table([
+        ['sugar', sugarIncluded],
+        ['cinnamon', cinnamonIncluded],
+        ['takeout', takeoutIncluded],
+        ['syrup', syrup],
+        ['beanType', beanType],
+      ]);
+
+      calculateOrderPrice({
+        sugarIncluded,
+        cinnamonIncluded,
+        takeoutIncluded,
+        syrup,
+        beanType,
+      });
+    },
+    [sugarIncluded, cinnamonIncluded, takeoutIncluded, syrup],
+  );
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={onCoffeFormSubmit}>
       <h1>Coffee terminal</h1>
       <div className="form-field">
         <label htmlFor="bean_type">Bean type</label>
-        <select id="bean_type">
+        <select id="bean_type" value={beanType} onChange={onBeanTypeChange}>
           {BEAN_TYPES.map((bean_type) => (
             <option key={bean_type.id} value={bean_type.id}>
               {bean_type.name} (${bean_type.price})
@@ -18,18 +98,30 @@ export const CoffeeForm: FC = () => {
         </select>
       </div>
       <div style={{ display: 'flex' }}>
-        <div className="form-field">
-          <label htmlFor="sugar">Add sugar ($1)</label>
-          <input type="checkbox" name="sugar" id="sugar" />
+        <div className="form-field-checkbox">
+          <input
+            type="checkbox"
+            name="sugar"
+            id="sugar"
+            checked={sugarIncluded}
+            onChange={onSugarIncludedChange}
+          />
+          <label htmlFor="sugar">Add sugar (${SUGAR_PRICE})</label>
         </div>
-        <div className="form-field">
-          <label htmlFor="cinnamon">Add cinnamon ($1)</label>
-          <input type="checkbox" name="cinnamon" id="cinnamon" />
+        <div className="form-field-checkbox">
+          <input
+            type="checkbox"
+            name="cinnamon"
+            id="cinnamon"
+            checked={cinnamonIncluded}
+            onChange={onCimmanonIncludedChange}
+          />
+          <label htmlFor="cinnamon">Add cinnamon (${CINNAMON_PRICE})</label>
         </div>
       </div>
       <div className="form-field">
-        <label htmlFor="syrup">Syrup?</label>
-        <select id="syrup">
+        <label htmlFor="syrup">Syrup</label>
+        <select id="syrup" onChange={onSyrupChange}>
           <option value="no syrup">none</option>
           {SYRUP_TYPES.map((syrup_type) => (
             <option key={syrup_type.id} value={syrup_type.id}>
@@ -38,9 +130,15 @@ export const CoffeeForm: FC = () => {
           ))}
         </select>
       </div>
-      <div className="form-field">
-        <label htmlFor="takeout">takeout ($1)</label>
-        <input type="checkbox" name="takeout" id="takeout" />
+      <div className="form-field-checkbox">
+        <input
+          type="checkbox"
+          name="takeout"
+          id="takeout"
+          checked={takeoutIncluded}
+          onChange={onTakeoutIncludedChange}
+        />
+        <label htmlFor="takeout">takeout (${TAKEOUT_PRICE})</label>
       </div>
       <div className="form-field">
         <Button
