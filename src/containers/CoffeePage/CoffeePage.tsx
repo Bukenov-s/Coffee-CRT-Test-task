@@ -27,13 +27,7 @@ export const CoffeePage: FC = () => {
   }, [dispatch]);
 
   return (
-    <section
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <section className="flex-center">
       <CoffeeForm calculateOrderPrice={calculateOrderPrice} />
       {order_complete && (
         <Modal onClose={orderDataCleared}>Your order price is ${price}</Modal>

@@ -13,10 +13,11 @@ import {
   SYRUP_TYPES,
   TAKEOUT_PRICE,
 } from '~/redux/coffee/coffee.constants';
+import { CoffeeOrder } from '~/redux/coffee/coffee.types';
 import { StyledForm } from './styles';
 
 interface Props {
-  calculateOrderPrice: (order: any) => void;
+  calculateOrderPrice: (order: CoffeeOrder) => void;
 }
 
 export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
@@ -27,37 +28,27 @@ export const CoffeeForm: FC<Props> = ({ calculateOrderPrice }) => {
   const [beanType, setBeanType] = useState('Arabica');
 
   const onCimmanonIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setCinnamonIncluded(e.target.checked);
-    },
+    (e) => setCinnamonIncluded(e.target.checked),
     [setCinnamonIncluded],
   );
 
   const onTakeoutIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setTakeoutIncluded(e.target.checked);
-    },
+    (e) => setTakeoutIncluded(e.target.checked),
     [setTakeoutIncluded],
   );
 
   const onSugarIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setSugarIncluded(e.target.checked);
-    },
+    (e) => setSugarIncluded(e.target.checked),
     [setSugarIncluded],
   );
 
   const onSyrupChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
-    (e) => {
-      setSyrup(e.target.value);
-    },
+    (e) => setSyrup(e.target.value),
     [setSyrup],
   );
 
   const onBeanTypeChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
-    (e) => {
-      setBeanType(e.target.value);
-    },
+    (e) => setBeanType(e.target.value),
     [setBeanType],
   );
 
