@@ -8,6 +8,7 @@ import {
 import {
   BEAN_TYPES,
   CINNAMON_PRICE,
+  ROAST_TYPES,
   SUGAR_PRICE,
   SYRUP_TYPES,
   TAKEOUT_PRICE,
@@ -48,6 +49,14 @@ function* calculateOrderPriceSaga({
 
       if (bean_type) {
         acc = acc + bean_type.price;
+      }
+    }
+
+    if (currentKey === 'roast_type') {
+      const roast_type = ROAST_TYPES.find(({ id }) => id === order.roast_type);
+
+      if (roast_type) {
+        acc = acc + roast_type.price;
       }
     }
 

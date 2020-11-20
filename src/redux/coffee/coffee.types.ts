@@ -4,6 +4,7 @@ export interface CoffeeOrder {
   takeout_included: boolean;
   syrup: string;
   bean_type: string;
+  roast_type: string;
 }
 
 export interface CoffeeState {

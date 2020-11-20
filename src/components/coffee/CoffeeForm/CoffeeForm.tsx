@@ -9,6 +9,7 @@ import Button from '~/components/ui/Button';
 import {
   BEAN_TYPES,
   CINNAMON_PRICE,
+  ROAST_TYPES,
   SUGAR_PRICE,
   SYRUP_TYPES,
   TAKEOUT_PRICE,
@@ -29,6 +30,7 @@ export const CoffeeForm: FC<Props> = ({
   const [takeout_included, setTakeoutIncluded] = useState(false);
   const [cinnamon_included, setCinnamonIncluded] = useState(false);
   const [syrup, setSyrup] = useState('none');
+  const [roast_type, setRoastType] = useState('');
   const [bean_type, setBeanType] = useState('Arabica');
 
   const onCimmanonIncludedChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -54,6 +56,11 @@ export const CoffeeForm: FC<Props> = ({
   const onBeanTypeChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
     (e) => setBeanType(e.target.value),
     [setBeanType],
+  );
+
+  const onRoastTypeChange: ChangeEventHandler<HTMLSelectElement> = useCallback(
+    (e) => setRoastType(e.target.value),
+    [setRoastType],
   );
 
   const resetCoffeeForm = useCallback(() => {
@@ -82,6 +89,7 @@ export const CoffeeForm: FC<Props> = ({
         takeout_included,
         syrup,
         bean_type,
+        roast_type,
       });
 
       resetCoffeeForm();
@@ -90,6 +98,8 @@ export const CoffeeForm: FC<Props> = ({
       sugar_included,
       cinnamon_included,
       takeout_included,
+      roast_type,
+      bean_type,
       syrup,
       resetCoffeeForm,
     ],
@@ -109,13 +119,25 @@ export const CoffeeForm: FC<Props> = ({
       <div className="form-field">
         <label htmlFor="bean_type">Bean type</label>
         <select id="bean_type" value={bean_type} onChange={onBeanTypeChange}>
-          {BEAN_TYPES.map((bean_type) => (
-            <option key={bean_type.id} value={bean_type.id}>
-              {bean_type.name} (${bean_type.price})
+          {BEAN_TYPES.map(({ id, name, price }) => (
+            <option key={id} value={id}>
+              {name} (${price})
             </option>
           ))}
         </select>
       </div>
+
+      <div className="form-field">
+        <label htmlFor="roast">Roast</label>
+        <select id="syrup" onChange={onRoastTypeChange}>
+          {ROAST_TYPES.map(({ id, name, price }) => (
+            <option key={id} value={id}>
+              {name} (${price})
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div style={{ display: 'flex' }}>
         <div className="form-field-checkbox">
           <input
@@ -142,9 +164,9 @@ export const CoffeeForm: FC<Props> = ({
         <label htmlFor="syrup">Syrup</label>
         <select id="syrup" onChange={onSyrupChange}>
           <option value="no syrup">none</option>
-          {SYRUP_TYPES.map((syrup_type) => (
-            <option key={syrup_type.id} value={syrup_type.id}>
-              {syrup_type.name} (${syrup_type.price})
+          {SYRUP_TYPES.map(({ id, name, price }) => (
+            <option key={id} value={id}>
+              {name} (${price})
             </option>
           ))}
         </select>
