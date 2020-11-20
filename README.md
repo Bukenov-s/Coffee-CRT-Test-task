@@ -1,6 +1,8 @@
 ## Description
 
-Boilerplate for react/redux app
+Test task
+Here is a link to deployed version
+https://angry-hypatia-80d4f5.netlify.app/
 
 ## Prerequisites
 
@@ -33,17 +35,6 @@ $ yarn test:watch
 
 ```
 
-## Storybook
-
-```bash
-# run storybook
-$ yarn storybook
-
-# build storybook
-$ yarn build-storybook
-
-```
-
 ## Build
 
 ```bash
@@ -52,4 +43,3 @@ $ yarn build
 
 
 ```
-
