@@ -2,7 +2,13 @@ import React, { ChangeEventHandler, FC, useCallback, useState } from 'react';
 import Button from '~/components/ui/Button';
 import { RemainderModulosPair } from '~/redux/converter/converter.types';
 
-export const Converter: FC = () => {
+interface Props {
+  convertReminderModulosPairs: (
+    reminderModulosPairs: RemainderModulosPair[],
+  ) => void;
+}
+
+export const Converter: FC<Props> = ({ convertReminderModulosPairs }) => {
   const [remainderModulosPairs, setRemainderModulosPairs] = useState<
     RemainderModulosPair[]
   >([]);
@@ -28,28 +34,53 @@ export const Converter: FC = () => {
         remainder,
       },
     ]);
-  }, [setRemainderModulosPairs, remainderModulosPairs, modulos, remainder]);
+
+    setModulos(0);
+    setRemainder(0);
+  }, [
+    setRemainderModulosPairs,
+    remainderModulosPairs,
+    modulos,
+    remainder,
+    setModulos,
+    setRemainder,
+  ]);
 
   return (
     <form>
       <div style={{ display: 'flex' }}>
-        <input
-          type="number"
-          placeholder="modulos"
-          value={modulos}
-          onChange={onModulosChange}
-        />
-        <input
-          type="number"
-          placeholder="remainder"
-          value={remainder}
-          onChange={onRemainderChange}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="modulos">Modulos</label>
+          <input
+            id="modulos"
+            type="number"
+            placeholder="modulos"
+            value={modulos}
+            onChange={onModulosChange}
+          />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="remainder">Remainder</label>
+          <input
+            id="remainder"
+            type="number"
+            placeholder="remainder"
+            value={remainder}
+            onChange={onRemainderChange}
+          />
+        </div>
+
         <Button
           type="button"
           onClick={onAddRemainderModulusPairClick}
           color_mode="dark"
           text="Add"
+        />
+        <Button
+          type="button"
+          onClick={() => convertReminderModulosPairs(remainderModulosPairs)}
+          color_mode="light"
+          text="Convert"
         />
       </div>
       {remainderModulosPairs.map(({ remainder, modulos }, pairIndex) => (

@@ -12,7 +12,7 @@ export const convertReminderModulosPairs = createAction(
 
 export const reminderModulosPairsConverted = createAction(
   '[converter <-] Reminder modulos pairs converted',
-  (result: number) => ({
+  (result: number | string) => ({
     payload: {
       result,
     },

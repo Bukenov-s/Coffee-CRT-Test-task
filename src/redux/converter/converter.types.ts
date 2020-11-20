@@ -5,6 +5,6 @@ export interface RemainderModulosPair {
 
 export interface ConverterState {
   is_pending: boolean;
-  result: number | RemainderModulosPair | null;
+  result: number | RemainderModulosPair | null | string;
   is_calculation_complete: boolean;
 }
