@@ -1,28 +1,90 @@
-// import reducer from '../things.reducers';
-// import * as actions from '../things.actions';
-// import { ThingsState, Thing } from '../things.types';
+import reducer from '../coffee.reducers';
+import {
+  calculateOrderPrice,
+  orderPriceCalculated,
+  orderComplete,
+  orderDataCleared,
+} from '../coffee.actions';
+import { CoffeeState, CoffeeOrder } from '../coffee.types';
 
-// describe('things reducer', () => {
-//   const initial_state: ThingsState = {
-//     things_list: [],
-//   };
+describe('coffee reducer', () => {
+  it('should return initial state', () => {
+    const initial_state = {} as CoffeeState;
 
-//   it('should return initial state', () => {
-//     expect(reducer(initial_state, { type: 'NO_TYPE' })).toEqual(initial_state);
-//   });
+    expect(reducer(initial_state, { type: 'SOME_UNKNOWN_TYPE' })).toEqual(
+      initial_state,
+    );
+  });
 
-//   it('should add new thing to thing_list', () => {
-//     const new_thing: Thing = {
-//       id: 0,
-//       name: 'name',
-//     };
+  it('should switch is_pending to true', () => {
+    const initial_state = {
+      is_pending: false,
+    } as CoffeeState;
 
-//     const result_state: ThingsState = {
-//       things_list: [new_thing],
-//     };
+    const result_state = {
+      is_pending: true,
+    };
 
-//     expect(reducer(initial_state, actions.addThing(new_thing))).toEqual(
-//       result_state,
-//     );
-//   });
-// });
+    expect(
+      reducer(initial_state, calculateOrderPrice({} as CoffeeOrder)),
+    ).toEqual(result_state);
+  });
+
+  it('should switch is_pending to true', () => {
+    const initial_state = {
+      is_pending: false,
+    } as CoffeeState;
+
+    const result_state = {
+      is_pending: true,
+    };
+
+    expect(
+      reducer(initial_state, calculateOrderPrice({} as CoffeeOrder)),
+    ).toEqual(result_state);
+  });
+
+  it('should switch is_pending to false, and assign price result', () => {
+    const initial_state = {
+      is_pending: true,
+      price: 0,
+    } as CoffeeState;
+
+    const result_state = {
+      is_pending: false,
+      price: 42,
+    };
+
+    expect(reducer(initial_state, orderPriceCalculated(42))).toEqual(
+      result_state,
+    );
+  });
+
+  it('should clear state to its initial shape', () => {
+    const initial_state = {
+      is_pending: false,
+      price: 42,
+      is_order_complete: true,
+    } as CoffeeState;
+
+    const result_state = {
+      is_pending: false,
+      price: 0,
+      is_order_complete: false,
+    };
+
+    expect(reducer(initial_state, orderDataCleared())).toEqual(result_state);
+  });
+
+  it('should set is_order_complete to true', () => {
+    const initial_state = {
+      is_order_complete: false,
+    } as CoffeeState;
+
+    const result_state = {
+      is_order_complete: true,
+    };
+
+    expect(reducer(initial_state, orderComplete)).toEqual(result_state);
+  });
+});

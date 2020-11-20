@@ -1,4 +1,5 @@
-import { calculateX, RemainderModulosPair } from './solution';
+import { RemainderModulosPair } from './redux/converter/converter.types';
+import { calculateX } from './solution';
 
 describe('calculateX', () => {
   it('should return 23', () => {

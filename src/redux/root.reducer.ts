@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import coffeeReducer from './coffee/coffee.reducers';
+import { AppState } from '~/types';
+import coffeeReducers from './coffee/coffee.reducers';
+import converterReducers from './converter/converter.reducers';
 
-const rootReducer = combineReducers({
-  coffee: coffeeReducer,
+const rootReducer = combineReducers<AppState>({
+  coffee: coffeeReducers,
+  converter: converterReducers,
 });
 
 export default rootReducer;

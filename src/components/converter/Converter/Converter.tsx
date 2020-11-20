@@ -1,8 +1,11 @@
 import React, { ChangeEventHandler, FC, useCallback, useState } from 'react';
 import Button from '~/components/ui/Button';
+import { RemainderModulosPair } from '~/redux/converter/converter.types';
 
 export const Converter: FC = () => {
-  const [modulosRemainderPairs, setModulosRemainderPairs] = useState<any>([]);
+  const [remainderModulosPairs, setRemainderModulosPairs] = useState<
+    RemainderModulosPair[]
+  >([]);
 
   const [modulos, setModulos] = useState(0);
   const [remainder, setRemainder] = useState(0);
@@ -17,15 +20,15 @@ export const Converter: FC = () => {
     [setRemainder],
   );
 
-  const onAddModulusRemainderPairClick = useCallback(() => {
-    setModulosRemainderPairs([
-      ...modulosRemainderPairs,
+  const onAddRemainderModulusPairClick = useCallback(() => {
+    setRemainderModulosPairs([
+      ...remainderModulosPairs,
       {
         modulos,
         remainder,
       },
     ]);
-  }, [setModulosRemainderPairs, modulosRemainderPairs, modulos, remainder]);
+  }, [setRemainderModulosPairs, remainderModulosPairs, modulos, remainder]);
 
   return (
     <form>
@@ -44,15 +47,16 @@ export const Converter: FC = () => {
         />
         <Button
           type="button"
-          onClick={onAddModulusRemainderPairClick}
+          onClick={onAddRemainderModulusPairClick}
           color_mode="dark"
           text="Add"
         />
       </div>
-      {modulosRemainderPairs.map((pair: any, pairIndex: number) => (
+      {remainderModulosPairs.map(({ remainder, modulos }, pairIndex) => (
         <div key={pairIndex}>
-          <span>{pair.modulos}</span>
-          <span>{pair.remainder}</span>
+          <p>
+            x = {remainder} (mod {modulos})
+          </p>
         </div>
       ))}
     </form>
