@@ -1,6 +1,11 @@
 import { RemainderModulosPair } from '~/redux/converter/converter.types';
 
-export const resolveCorrectModulos = () => {};
+export const resolveCorrectModulos = (
+  numberToConvert: number,
+): RemainderModulosPair[] => {
+  // ???
+  return [] as RemainderModulosPair[];
+};
 
 export const calculateX = (
   remainderModulosPairArray: RemainderModulosPair[],
