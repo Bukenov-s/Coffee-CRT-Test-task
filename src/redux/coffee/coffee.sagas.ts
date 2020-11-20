@@ -17,9 +17,6 @@ import {
 function* calculateOrderPriceSaga({
   payload: { order },
 }: ReturnType<typeof calculateOrderPrice>) {
-  console.log('saga is triggered');
-  console.log(`here is the thing ${order}`);
-
   // Mocking backend request
   yield delay(1000);
 
